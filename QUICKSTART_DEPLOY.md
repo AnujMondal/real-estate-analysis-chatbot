@@ -70,9 +70,13 @@ python -c "from django.core.management.utils import get_random_secret_key; print
 
 ## ✅ Verification
 
-1. **Test Backend**: Visit `https://your-app.railway.app/api/areas/`
+1. **Test Backend**: 
+   - Root: `https://your-app.railway.app/` (shows API info)
+   - Areas endpoint: `https://your-app.railway.app/api/areas/`
 2. **Test Frontend**: Visit `https://your-app.vercel.app`
 3. **Upload file** and test a query
+
+**Note:** If you see "Not Found" on root URL, that's normal - visit `/api/areas/` instead
 
 ---
 
@@ -97,6 +101,12 @@ See **DEPLOYMENT.md** for:
 ---
 
 ## 🔧 Common Issues
+
+**Backend shows "Not Found"?**
+
+- This is NORMAL for the root URL (`/`)
+- Test the API endpoint instead: `/api/areas/`
+- Example: `https://your-app.railway.app/api/areas/`
 
 **Backend 500 Error?**
 
