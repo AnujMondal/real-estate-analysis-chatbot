@@ -108,10 +108,17 @@ See **DEPLOYMENT.md** for:
 - Check `REACT_APP_API_URL` in Vercel
 - Verify CORS settings in Railway
 
+**"react-scripts: command not found" on Vercel?**
+
+- **CRITICAL:** Make sure Root Directory is set to `frontend` in Vercel project settings
+- Framework Preset should auto-detect as "Create React App"
+- If not, go to Project Settings → General → Root Directory → Change to `frontend`
+
 **Build failed?**
 
 - Check build logs in Railway/Vercel
 - Ensure all files are committed to GitHub
+- Verify Root Directory is correctly set
 
 ---
 
