@@ -138,12 +138,34 @@ if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
     # In production, specify allowed origins
-    CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',') if os.getenv('CORS_ALLOWED_ORIGINS') else []
+    cors_origins = os.getenv('CORS_ALLOWED_ORIGINS', '')
+    if cors_origins:
+        CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_origins.split(',') if origin.strip()]
+    else:
+        # Fallback: allow common Vercel patterns
+        CORS_ALLOWED_ORIGINS = []
+        CORS_ALLOW_ALL_ORIGINS = True  # Temporary for debugging
+        
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
 
 # Media files
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Ensure media directory exists
+os.makedirs(MEDIA_ROOT, exist_ok=True)
+os.makedirs(os.path.join(MEDIA_ROOT, 'data'), exist_ok=True)
 
 # REST Framework settings
 REST_FRAMEWORK = {

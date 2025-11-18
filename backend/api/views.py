@@ -31,6 +31,11 @@ def upload_file(request):
                 status=status.HTTP_400_BAD_REQUEST
             )
         
+        # Ensure media directories exist
+        media_root = settings.MEDIA_ROOT
+        data_dir = os.path.join(media_root, 'data')
+        os.makedirs(data_dir, exist_ok=True)
+        
         # Save file
         file_path = default_storage.save(f'data/{file.name}', file)
         full_path = os.path.join(settings.MEDIA_ROOT, file_path)
@@ -50,6 +55,9 @@ def upload_file(request):
         }, status=status.HTTP_200_OK)
         
     except Exception as e:
+        import traceback
+        error_details = traceback.format_exc()
+        print(f"Upload error: {error_details}")  # Log to Railway logs
         return Response(
             {'error': f'Error uploading file: {str(e)}'},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
